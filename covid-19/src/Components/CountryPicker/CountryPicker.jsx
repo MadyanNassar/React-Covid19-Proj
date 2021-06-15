@@ -33,12 +33,15 @@ const CountryPicker = () => {
   const allCountries = countryData.countries ? countryData.countries : [];
   console.log(visited);
 
-  function deleteCountry({ id }) {
-    let newCountryList = visited.filter((country) => country.id !== id);
-    SetVisited(newCountryList);
-    return <div></div>;
-  }
+  const handleRemoveItem = (e) => {
+  const name = e.target.getAttribute("val");
+  console.log(name)
+  let newCountryList = visited.filter((item) => item.country !== name );
+  SetVisited(newCountryList)
 
+  return <div></div>;
+  }
+  
   const classes = useStyles();
   return (
     <div className="countryPicker">
@@ -76,7 +79,7 @@ const CountryPicker = () => {
         {visited.length !== 0 &&
           visited.map((item) => {
             return (
-              <div>
+              <div key={item.country}>
                 <div className={classes.root}>
                   <Grid xs={1}>
                     <Grid item xs={18}>
@@ -94,7 +97,7 @@ const CountryPicker = () => {
                         <Link to={`/country`}>
                           <p style={{ color: "green" }}>more details </p>
                         </Link>
-                        <Button variant="contained" onClick={deleteCountry}>
+                        <Button variant="contained" onClick={handleRemoveItem} val={item.country} >
                           x
                         </Button>
                       </Paper>

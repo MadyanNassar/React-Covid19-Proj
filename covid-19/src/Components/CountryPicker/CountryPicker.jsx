@@ -9,19 +9,16 @@ import { CovidContext } from "../Context/GlobalState";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    padding: theme.spacing(3),
-    flexDirection: "row",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    flexWrap: "wrap",
-    paper: {
-      margin: theme.spacing(2),
-      width: theme.spacing(16),
-      height: theme.spacing(16),
-    },
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    margin: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -79,10 +76,9 @@ const CountryPicker = () => {
         {visited.length !== 0 &&
           visited.map((item) => {
             return (
-              <div key={item.country}>
-                <div className={classes.root}>
-                  <Grid xs={1}>
-                    <Grid item xs={18}>
+              <div key={item.country} className={classes.root}>
+                
+                  <Grid item xs>
                       <Paper className={classes.paper}>
                         {/* <img src = {item.countryInfo.flag} style={{width:"250"}} /> */}
                         <p style={{ fontWeight: "bold", color: "green" }}>
@@ -101,9 +97,8 @@ const CountryPicker = () => {
                           x
                         </Button>
                       </Paper>
-                    </Grid>
                   </Grid>
-                </div>
+                
               </div>
             );
           })}

@@ -1,61 +1,52 @@
 import React, { useState, useContext } from "react";
 import "./countrypicker.css";
-import { Link } from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 import { CovidContext } from "../Context/GlobalState";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import CountryInList from "../CountryInList/country";
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
-
-const CountryPicker = () => {
+export const CountryPicker = () => {
   const [visited, SetVisited] = useState([]);
   const DataCovid = useContext(CovidContext);
-  const { setUrl, countryData, globalData } = DataCovid;
-  // const [lnk, setLnk] = useState(false);
+  const { countryData, globalData, setUrl, url } = DataCovid;
   const allCountries = countryData.countries ? countryData.countries : [];
-  console.log(visited);
 
   const handleRemoveItem = (e) => {
-  const name = e.target.getAttribute("val");
-  console.log(name)
-  let newCountryList = visited.filter((item) => item.country !== name );
-  SetVisited(newCountryList)
+    // console.log(e.currentTarget.getAttribute("val"))
+    const name = e.currentTarget.getAttribute("val");
+    let newCountryList = visited.filter((item) => item.country !== name);
+    let DeleteWorld = visited.filter((item) => item.country !== undefined);
+    if (name) {
+      SetVisited(newCountryList);
+    } else if (e.currentTarget.value === "") {
+      SetVisited(DeleteWorld);
+    }
+    return <div></div>;
+  };
 
-  return <div></div>;
-  }
-  
-  const classes = useStyles();
+  const addFunction = () => {
+if (url){
+    const found = visited.some((item) => item.country === globalData.country);
+    if (!found) {
+      SetVisited([globalData, ...visited]);
+    } else {
+      SetVisited([...visited]);
+    }
+    }
+
+  //  setUrl("");
+  };
+
   return (
     <div className="countryPicker">
       <Autocomplete
         className="search-bar"
-        defaultValue={allCountries.find((v) => v.name)}
-        onInputChange={(e, value) => {
-          setUrl(value);
-
-          const found = visited.some(
-            (item) => item.country === globalData.country
-          );
-          if (!found) {
-            SetVisited([globalData, ...visited]);
-          } else {
-            SetVisited([...visited]);
+        onChange={(e, value) => {
+          if (!value) {
+            return <></>;
           }
+          setUrl(value.name);
         }}
         options={allCountries}
         getOptionLabel={(option) => option.name}
@@ -68,38 +59,41 @@ const CountryPicker = () => {
           />
         )}
       />
+      <Button
+        variant="contained"
+        color="primary"
+        className="input-btn"
+        onClick={() => addFunction()}
+      >
+        click here to add searched country to the list
+      </Button>
       <div className="visited-country">
         <h3>List of visited Countries</h3>
         {visited.length === 0 && (
           <p> No Countries has been searched yet .... </p>
         )}
+          {url.length === 0 && (<></>) }
         {visited.length !== 0 &&
           visited.map((item) => {
             return (
-              <div key={item.country} className={classes.root}>
-                
-                  <Grid item xs>
-                      <Paper className={classes.paper}>
-                        {/* <img src = {item.countryInfo.flag} style={{width:"250"}} /> */}
-                        <p style={{ fontWeight: "bold", color: "green" }}>
-                          Country : {item.country}
-                        </p>
-                        <p style={{ fontWeight: "bold", color: "blue" }}>
-                          Continent : {item.continent}
-                        </p>
-                        <p style={{ fontWeight: "bold", color: "red" }}>
-                          Total-Cases: {item.cases}
-                        </p>
-                        <Link to={`/country`}>
-                          <p style={{ color: "green" }}>more details </p>
-                        </Link>
-                        <Button variant="contained" onClick={handleRemoveItem} val={item.country} >
-                          x
-                        </Button>
-                      </Paper>
-                  </Grid>
-                
+                        <div>
+                  <CountryInList
+                    country={item.country}
+                    continent={item.continent}
+                    cases={item.cases}
+                    flag={item.countryInfo.flag}
+                  />
+                        <Button
+                        val={item.country}
+        variant="contained"
+        color="secondary"
+        style={{marginTop:-10}}
+        onClick={(e) => handleRemoveItem(e) }
+      >
+        remove {item.country} from list
+      </Button>
               </div>
+
             );
           })}
       </div>

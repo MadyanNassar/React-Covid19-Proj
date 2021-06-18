@@ -1,4 +1,6 @@
 import React from "react";
+// import { useLocation } from "react-router";
+// import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Cards from "../Cards/Cards";
@@ -7,6 +9,10 @@ import { useHistory } from "react-router-dom";
 import "./oneCountry.css";
 
 function OneCountry() {
+  // const loc = useLocation();
+  // console.log(loc)
+  // const [current, setCurrent]=useState(loc.state);
+  // console.log(current)
   const back = useHistory();
   const backFunc = () => {
     back.goBack();

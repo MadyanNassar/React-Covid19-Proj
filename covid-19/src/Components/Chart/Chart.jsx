@@ -5,10 +5,14 @@ import { CovidContext } from "../Context/GlobalState";
 
 const Chart = () => {
   const covid = useContext(CovidContext);
-  const { historyData } = covid;
+  const { historyData, globalData } = covid;
+  console.log(historyData);
+  console.log(globalData);
   let allData =
     historyData.cases || historyData.country ? historyData : "Loading";
   let line;
+
+  console.log({ allData });
   if (allData.country) {
     const { timeline } = allData;
     const { cases, deaths, recovered } = timeline;
@@ -18,7 +22,7 @@ const Chart = () => {
     let dateData = [];
     for (let newCase in cases) {
       let obj = { newCase: cases[newCase] };
-      activeCases.push(obj);
+      activeCases.push(obj);  
     }
     for (let newDeath in deaths) {
       let obj = { newDeath: deaths[newDeath] };
@@ -111,6 +115,11 @@ const Chart = () => {
     );
   }
 
-  return <div className="chart">{line}</div>;
+  return (
+    <div>
+      <h1>{globalData.country || "World Data"}</h1>
+      <div className="chart">{line}</div>
+    </div>
+  );
 };
 export default Chart;

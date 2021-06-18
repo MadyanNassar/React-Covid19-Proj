@@ -55,5 +55,5 @@ export const FetchAPI = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  return { setUrl, globalData, historyData, countryData, mapData };
+  return { url, setUrl, globalData, historyData, countryData, mapData };
 };

@@ -6,6 +6,7 @@ export const FetchAPI = () => {
   const [globalData, setGlobalData] = useState({});
   const [countryData, setCountryData] = useState({});
   const [mapData, setMapData] = useState([]);
+  const [mapChartData, setMapChartData] = useState({});
   const [historyData, setGlobalHistoryData] = useState({});
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export const FetchAPI = () => {
       .then((data) => setCountryData(data))
       .catch((err) => console.log(err));
   }, []);
+
   useEffect(() => {
     axios
       .get(`https://corona.lmao.ninja/v2/countries`)
@@ -55,5 +57,24 @@ export const FetchAPI = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  return { url, setUrl, globalData, historyData, countryData, mapData };
+  useEffect(() => {
+    if (url) {
+      import(`@highcharts/map-collection/countries/${url}/${url}-all.geo.json`)
+        .then((data) => {
+          setMapChartData(data);
+        })
+        .catch((err) => console.log({ err }));
+    }
+  }, [url]);
+
+  return {
+    url,
+    setUrl,
+    globalData,
+    historyData,
+    countryData,
+    mapData,
+    mapChartData,
+    setMapChartData,
+  };
 };

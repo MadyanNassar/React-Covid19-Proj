@@ -1,36 +1,58 @@
-import React from "react";
-// import { useLocation } from "react-router";
-// import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import Cards from "../Cards/Cards";
 import Chart from "../Chart/Chart";
-import { useHistory } from "react-router-dom";
+import MapChart from "../MapChart/MapChart";
+import { Tab, Tabs as TabsComponent, TabList, TabPanel } from "react-tabs";
+import { useHistory, useParams } from "react-router-dom";
+import { CovidContext } from "../Context/GlobalState";
+import "react-tabs/style/react-tabs.css";
 import "./oneCountry.css";
 
 function OneCountry() {
-  // const loc = useLocation();
-  // console.log(loc)
-  // const [current, setCurrent]=useState(loc.state);
-  // console.log(current)
   const back = useHistory();
+  const data = useContext(CovidContext);
+  const { setUrl, globalData } = data;
+  const { countryId } = useParams();
+  const isCountry = globalData.country;
+  setUrl(countryId);
+
+  if (!isCountry) {
+    return (
+      <div>
+        <h1> No country found ... </h1>
+        <br />
+        <h2> the {countryId} in the link is not reference to any country </h2>
+      </div>
+    );
+  }
+
   const backFunc = () => {
     back.goBack();
   };
 
   return (
     <div>
-      <p>
-        <strong>Country more details</strong>
-      </p>
-      <Grid container alignItems="stretch">
-        <Grid item xs={12} sm={12} md={8} lg={8}>
+      <h1>More information About {globalData.country} ...</h1>
+
+      <TabsComponent>
+        <TabList>
+          <Tab> Chart </Tab>
+          <Tab> Statistics </Tab>
+          <Tab> Map of {globalData.country} </Tab>
+        </TabList>
+
+        <TabPanel>
           <Chart />
-        </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
+        </TabPanel>
+        <TabPanel>
           <Cards />
-        </Grid>
-      </Grid>
+        </TabPanel>
+        <TabPanel>
+          <MapChart />
+        </TabPanel>
+      </TabsComponent>
+
       <Button
         variant="contained"
         color="secondary"

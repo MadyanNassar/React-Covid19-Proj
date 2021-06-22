@@ -15,12 +15,12 @@ function App() {
         <div className="App">
           <Navbar />
           <Route exact path="/" component={Home} />
-          <Route exact path="/country" component={OneCountry} />
+          <Route exact path="/:countryId" component={OneCountry} />
           <Footer />
         </div>
       </Router>
     </CovidProvider>
   );
-}
+};
 
 export default App;

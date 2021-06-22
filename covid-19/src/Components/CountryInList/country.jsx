@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import { CovidContext } from "../Context/GlobalState";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,29 +18,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CountryInList({ country, continent, cases,flag }) {
-//   const handleRemoveItem = (e) => {
-//     const name = e.currentTarget.getAttribute("val");
-//     let newCountryList = visited.filter((item) => item.country !== name);
-//     let DeleteWorld = visited.filter((item) => item.country !== undefined);
-//     if (name) {
-//       SetVisited(newCountryList);
-//     } else if (e.currentTarget.value === "") {
-//       SetVisited(DeleteWorld);
-//     }
-//     return <div></div>;
-//   };
+function CountryInList({ country, continent, cases, flag }) {
+  const data = useContext(CovidContext);
+  const { globalData } = data;
+  const countryId = globalData.countryInfo.iso2.toLowerCase();
+  const classes = useStyles();
 
-const classes = useStyles();
+  if (!flag) return <></>;
+
   return (
-    <div key={country} className={classes.root} >
+    <div key={country} className={classes.root}>
       <Grid item xs>
-        <Paper className={classes.paper} >
-          <img
-            src={flag}
-            style={{ width: "200" }}
-            alt={country}
-          />
+        <Paper className={classes.paper}>
+          <img src={flag} style={{ width: "200" }} alt={country} />
           <p style={{ fontWeight: "bold", color: "green" }}>
             Country : {country}
           </p>
@@ -54,7 +45,7 @@ const classes = useStyles();
             separator=","
             duration={2.5}
           />
-          <Link to={`/country`}>
+          <Link to={`${countryId}`}>
             <p style={{ color: "green" }}>more details </p>
           </Link>
         </Paper>

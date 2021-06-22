@@ -13,7 +13,6 @@ export const CountryPicker = () => {
   const allCountries = countryData.countries ? countryData.countries : [];
 
   const handleRemoveItem = (e) => {
-    // console.log(e.currentTarget.getAttribute("val"))
     const name = e.currentTarget.getAttribute("val");
     let newCountryList = visited.filter((item) => item.country !== name);
     let DeleteWorld = visited.filter((item) => item.country !== undefined);
@@ -26,16 +25,16 @@ export const CountryPicker = () => {
   };
 
   const addFunction = () => {
-if (url){
-    const found = visited.some((item) => item.country === globalData.country);
-    if (!found) {
-      SetVisited([globalData, ...visited]);
+    if (url) {
+      const found = visited.some((item) => item.country === globalData.country);
+      if (!found) {
+        SetVisited([globalData, ...visited]);
+      } else {
+        SetVisited([...visited]);
+      }
     } else {
-      SetVisited([...visited]);
+      return <></>;
     }
-    }
-
-  //  setUrl("");
   };
 
   return (
@@ -72,28 +71,28 @@ if (url){
         {visited.length === 0 && (
           <p> No Countries has been searched yet .... </p>
         )}
-          {url.length === 0 && (<></>) }
+        {url.length === 0 && <></>}
         {visited.length !== 0 &&
+          url &&
           visited.map((item) => {
             return (
-                        <div>
-                  <CountryInList
-                    country={item.country}
-                    continent={item.continent}
-                    cases={item.cases}
-                    flag={item.countryInfo.flag}
-                  />
-                        <Button
-                        val={item.country}
-        variant="contained"
-        color="secondary"
-        style={{marginTop:-10}}
-        onClick={(e) => handleRemoveItem(e) }
-      >
-        remove {item.country} from list
-      </Button>
+              <div>
+                <CountryInList
+                  country={item.country}
+                  continent={item.continent}
+                  cases={item.cases}
+                  flag={item.countryInfo.flag}
+                />
+                <Button
+                  val={item.country}
+                  variant="contained"
+                  color="secondary"
+                  style={{ marginTop: -10 }}
+                  onClick={(e) => handleRemoveItem(e)}
+                >
+                  remove {item.country} from list
+                </Button>
               </div>
-
             );
           })}
       </div>

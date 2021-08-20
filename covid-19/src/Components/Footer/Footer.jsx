@@ -3,11 +3,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import "./Footer.css";
 
 export default function Footer() {
   return (
-    <div className="footer">
+    <div style={{marginTop: '20px'}}>
       <AppBar position="static" style={{ backgroundColor: "#212121" }}>
         <Container>
           <Toolbar>

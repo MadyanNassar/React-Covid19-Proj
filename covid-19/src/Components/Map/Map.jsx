@@ -3,13 +3,12 @@ import { useState, useContext } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 import { CovidContext } from "../Context/GlobalState";
 import Grid from "@material-ui/core/Grid";
-import "./Map.css";
 
 export default function Map() {
   const covid = useContext(CovidContext);
   const { mapData } = covid;
   const [viewport, setViewport] = useState({
-    width: "100vw",
+    width: "100%",
     height: "90vh",
     latitude: 52.4,
     longitude: 5,
@@ -17,7 +16,7 @@ export default function Map() {
   });
 
   return (
-    <div className="map">
+    <div>
       <h2> World map with total cases per each country</h2>
       <Grid>
         <div>
@@ -28,6 +27,7 @@ export default function Map() {
               "pk.eyJ1IjoibWFkeWFuIiwiYSI6ImNrcHh0MmdraDA5N20ycHFjMDBkaWhwaDQifQ.rKoCyqN5i-jQRRK-g4gnQw"
             }
             onViewportChange={(nextViewport) => setViewport(nextViewport)}
+            style={{  maxWidth:'97vw', margin:'0 auto'}}
           >
             {mapData.map((country) => {
               return (

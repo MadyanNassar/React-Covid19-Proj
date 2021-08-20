@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-import { CovidContext } from "../Context/GlobalState";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,10 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CountryInList({ country, continent, cases, flag }) {
-  const data = useContext(CovidContext);
-  const { globalData } = data;
-  const countryId = globalData.countryInfo.iso2.toLowerCase();
+function CountryInList({ country, continent, cases, flag, countryId }) {
   const classes = useStyles();
 
   if (!flag) return <></>;

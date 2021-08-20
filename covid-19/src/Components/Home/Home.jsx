@@ -6,6 +6,7 @@ const Home = () => {
   return (
     <div>
       <CountryPicker />
+      <hr style={{ marginTop: "30px" }} />
       <Map />
     </div>
   );

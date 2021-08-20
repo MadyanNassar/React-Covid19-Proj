@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import "./Card.css";
 import Paper from "@material-ui/core/Paper";
 import CountUp from "react-countup";
 import Grid from "@material-ui/core/Grid";
@@ -41,9 +40,9 @@ const Cards = () => {
   return (
     <div>
       <h1>{globalData.country || "World Data"}</h1>
-      <div className="card">
+      <div >
         <Grid container spacing={2}>
-          <div className="card-style">
+          <div style={{margin: '30px auto'}}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <Paper className={`${classes.paper} ${classes.gray}`}>
                 <Typography variant="h6" gutterBottom color="textSecondary">
@@ -81,7 +80,7 @@ const Cards = () => {
               </Paper>
             </Grid>
           </div>
-          <div className="card-style">
+          <div style={{margin: '30px auto'}}>
             <Grid item xs={12} sm={12} md={6} lg={6}>
               <Paper className={`${classes.paper} ${classes.green}`}>
                 <Typography variant="h6" gutterBottom color="textSecondary">

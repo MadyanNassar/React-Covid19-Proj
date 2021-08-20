@@ -7,7 +7,6 @@ import { Tab, Tabs as TabsComponent, TabList, TabPanel } from "react-tabs";
 import { useHistory, useParams } from "react-router-dom";
 import { CovidContext } from "../Context/GlobalState";
 import "react-tabs/style/react-tabs.css";
-import "./oneCountry.css";
 
 function OneCountry() {
   const back = useHistory();
@@ -28,7 +27,7 @@ function OneCountry() {
   }
 
   const backFunc = () => {
-    back.goBack();
+    back.push('/');
   };
 
   return (
@@ -57,7 +56,7 @@ function OneCountry() {
         variant="contained"
         color="secondary"
         onClick={backFunc}
-        className="btn"
+        style={{margin: '50px auto !important'}}
       >
         GO Back
       </Button>

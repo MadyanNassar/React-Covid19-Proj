@@ -1,5 +1,4 @@
 import React from "react";
-import "./Navbar.css";
 import logo from "./logo.png";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 function Navbar() {
   return (
-    <div className="navbar">
+    <div>
       <AppBar position="static" style={{ backgroundColor: "#003580" }}>
         <Toolbar>
           <img src={logo} alt="logo" style={{ width: 50 }} />

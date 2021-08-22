@@ -12,7 +12,7 @@ export const CountryPicker = () => {
   const { countryData, globalData, setUrl, url } = DataCovid;
   const allCountries = countryData.countries ? countryData.countries : [];
 
-  const savedCountries = JSON.parse(localStorage.getItem("countries"));
+  const savedCountries = JSON.parse(localStorage.getItem("countries")) || [];
   const lastVisited = JSON.parse(localStorage.getItem("country")) || "";
 
   async function fetch() {
@@ -49,7 +49,6 @@ export const CountryPicker = () => {
   };
 
   const handleRemoveItem = (e) => {
-    setUrl("");
     const name = e.currentTarget.getAttribute("val");
     let newCountryList = visited.filter((item) => item.country !== name);
     let DeleteWorld = visited.filter((item) => item.country !== undefined);
@@ -96,7 +95,7 @@ export const CountryPicker = () => {
       </Button>
       <h3>List of visited Countries</h3>
       <div style={{ maxHeight: "30rem", overflow: "auto" }}>
-        {visited && <p> No Countries has been searched yet .... </p>}
+        {savedCountries.length === 0 && <p> No Countries has been searched yet .... </p>}
         {url.length === 0 && <></>}
         {savedCountries &&
           url &&

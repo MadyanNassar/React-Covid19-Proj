@@ -47,7 +47,11 @@ function MapChart() {
   // console.log(mapChartData)
   // console.log(globalData)
 
-  const countryID = globalData.countryInfo.iso2.toLowerCase();
+  const countryID =
+    globalData.countryInfo.iso2 === null
+      ? setUrl("undefined")
+      : globalData.countryInfo.iso2.toLowerCase();
+
   setUrl(countryID);
 
   // console.log(url)
@@ -75,11 +79,15 @@ function MapChart() {
 
   return (
     <div>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        constructorType={"mapChart"}
-      />
+      {url === undefined ? (
+        <h1>There's no Map</h1>
+      ) : (
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          constructorType={"mapChart"}
+        />
+      )}
     </div>
   );
 }

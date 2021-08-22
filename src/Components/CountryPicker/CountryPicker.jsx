@@ -13,7 +13,7 @@ export const CountryPicker = () => {
   const allCountries = countryData.countries ? countryData.countries : [];
 
   const savedCountries = JSON.parse(localStorage.getItem("countries"));
-  const lastVisited = JSON.parse(localStorage.getItem("country"));
+  const lastVisited = JSON.parse(localStorage.getItem("country")) || "";
 
   async function fetch() {
     try {
@@ -41,10 +41,7 @@ export const CountryPicker = () => {
           "countries",
           JSON.stringify([globalData, ...visited])
         );
-        localStorage.setItem(
-          "country",
-          JSON.stringify(url)
-        );
+        localStorage.setItem("country", JSON.stringify(url));
       } else {
         return <></>;
       }
@@ -52,6 +49,7 @@ export const CountryPicker = () => {
   };
 
   const handleRemoveItem = (e) => {
+    setUrl("");
     const name = e.currentTarget.getAttribute("val");
     let newCountryList = visited.filter((item) => item.country !== name);
     let DeleteWorld = visited.filter((item) => item.country !== undefined);
@@ -98,21 +96,25 @@ export const CountryPicker = () => {
       </Button>
       <h3>List of visited Countries</h3>
       <div style={{ maxHeight: "30rem", overflow: "auto" }}>
-        {visited.length === 0 && (
-          <p> No Countries has been searched yet .... </p>
-        )}
+        {visited && <p> No Countries has been searched yet .... </p>}
         {url.length === 0 && <></>}
-        {visited.length !== 0 &&
+        {savedCountries &&
           url &&
           visited.map((item) => {
             return (
               <div key={item.country}>
                 <CountryInList
-                  country={item.country}
-                  continent={item.continent}
-                  cases={item.cases}
-                  flag={item.countryInfo.flag}
-                  countryId={item.countryInfo.iso2.toLowerCase()}
+                  country={item.country ? item.country : "unKnown"}
+                  continent={item.continent ? item.continent : "unKnown"}
+                  cases={item.country ? item.cases : 0}
+                  flag={item.countryInfo ? item.countryInfo.flag : <></>}
+                  countryId={
+                    item.countryInfo
+                      ? item.countryInfo.iso2 === null
+                        ? item.country
+                        : item.countryInfo.iso2.toLowerCase()
+                      : item.country
+                  }
                 />
                 <Button
                   val={item.country}

@@ -21,13 +21,17 @@ function OneCountry() {
       <div>
         <h1> No country found ... </h1>
         <br />
-        <h2> the {countryId} in the link is not reference to any country </h2>
+        {countryId === "undefined" ? (
+          <p>there's no data for country {isCountry}</p>
+        ) : (
+          <h2> the {countryId} in the link is not reference to any country </h2>
+        )}
       </div>
     );
   }
 
   const backFunc = () => {
-    back.push('/');
+    back.push("/");
   };
 
   return (
@@ -56,7 +60,7 @@ function OneCountry() {
         variant="contained"
         color="secondary"
         onClick={backFunc}
-        style={{margin: '50px auto !important'}}
+        style={{ margin: "50px auto !important" }}
       >
         GO Back
       </Button>

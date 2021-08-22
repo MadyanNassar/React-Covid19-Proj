@@ -13,11 +13,13 @@ export const CountryPicker = () => {
   const allCountries = countryData.countries ? countryData.countries : [];
 
   const savedCountries = JSON.parse(localStorage.getItem("countries"));
+  const lastVisited = JSON.parse(localStorage.getItem("country"));
 
   async function fetch() {
     try {
       if (savedCountries) {
         await setVisited(savedCountries);
+        await setUrl(lastVisited);
       } else {
         return <></>;
       }
@@ -38,6 +40,10 @@ export const CountryPicker = () => {
         localStorage.setItem(
           "countries",
           JSON.stringify([globalData, ...visited])
+        );
+        localStorage.setItem(
+          "country",
+          JSON.stringify(url)
         );
       } else {
         return <></>;

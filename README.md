@@ -2,6 +2,8 @@
 
 This repository contains simple data monitoring for Covid-19 using React.js
 
+<img alt="screenshot" src="public/screenshot.png" />
+
 Online Deployment of this project is available at [React-Covid19-Proj](https://zealous-mccarthy-3d3f4f.netlify.app/).
 
 **Feature Include**
